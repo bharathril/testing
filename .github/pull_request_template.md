@@ -1,19 +1,11 @@
-## Description
+## Please provide a brief summary of the work being done in this pull request.
 
-### Please provide a brief summary of the work being done in this pull request.
+## Please list the features or functionality that are included or affected by the changes in this pull request.
 
-## Included and/or affected features
+## Please provide a link to the relevant Jira task, if applicable.
+[Jira Ticket](Paste link here)
 
-### Please list the features or functionality that are included or affected by the changes in this pull request.
-
-## Jira task link
-
-### Please provide a link to the relevant Jira task, if applicable.
-[Jira Ticket](metion the link of the ticket)
-
-## Reviewers
-
-### Please tag the GitHub handles of the reviewers who should be notified of this pull request.
+## Please tag the GitHub handles of the reviewers who should be notified of this pull request.
 
 ## Self checklist
 
@@ -26,6 +18,4 @@ Before submitting this pull request, please ensure that:
 - [ ] You have updated the documentation if necessary.
 
 
-## Additional notes
-
-### Please provide any additional information or context that you think may be useful for reviewers of this pull request.
+## Please provide any additional information or context that you think may be useful for reviewers of this pull request.
