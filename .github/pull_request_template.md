@@ -1,11 +1,12 @@
 ## Please provide a brief summary of the work being done in this pull request.
 
-## Please list the features or functionality that are included or affected by the changes in this pull request.
+## List the features or functionality that are included or affected by the changes in this pull request.
 
-## Please provide a link to the relevant Jira task, if applicable.
+## Provide a link to the relevant Jira task, if applicable.
 [Jira Ticket](Paste link here)
 
-## Please tag the GitHub handles of the reviewers who should be notified of this pull request.
+## Tag the GitHub handles of the reviewers who should be notified of this pull request.
+@
 
 ## Self checklist
 
