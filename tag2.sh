@@ -7,4 +7,4 @@ varthree=$((vartwo + 1))
 echo "$varthree"
 newformat="$varone.$varthree"
     
-git tag $newformat   
+git tag $newformat         
