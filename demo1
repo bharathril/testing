@@ -1,15 +1,38 @@
 #!/bin/bash
 
+# CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
+
+# # Specify the tag format you want to use
+# newformat="$CURRENT_BRANCH-%Y%m%dV1.0"
+
+# # Create a tag with the specified format
+# TAG_NAME=$(date +$newformat)
+# git tag $TAG_NAME
+
+# +++=++++++++++++++++++
+
 CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
 
+
+newformat="$CURRENT_BRANCH-%Y%m%dV1.0"
+
+varone=$(git describe --tags | cut -d '.' -f 1)
+vartwo=$(git describe --tags | cut -d '.' -f 2)
+varthree=$((vartwo + 1))
+
+echo "$varthree"
+newformat="$varone.$varthree"
+
+
 # Specify the tag format you want to use
-TAG_FORMAT="$CURRENT_BRANCH-%Y%m%dV1.0"
+newformat="$CURRENT_BRANCH-%Y%m%dV1.0"
 
 # Create a tag with the specified format
-TAG_NAME=$(date +$TAG_FORMAT)
+TAG_NAME=$(date +$newformat)
 git tag $TAG_NAME
 
-+++=++++++++++++++++++
+
+
 format="AppNameDateV1.0"
 
 # Extract the first part of the format before the first dot '.'
