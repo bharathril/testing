@@ -6,5 +6,5 @@ vartwo=$(git describe --tags | cut -d '.' -f 2)
 varthree=$((vartwo + 1))
 echo "$varthree"
 newformat="$varone.$varthree"
-
+    
 git tag $newformat   
