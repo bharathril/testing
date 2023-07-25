@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
+
+# # Specify the tag format you want to use
+# newformat="$CURRENT_BRANCH-%Y%m%dV1.0"
+
+# # Create a tag with the specified format
+# TAG_NAME=$(date +$newformat)
+# git tag $TAG_NAME
+
+# +++=++++++++++++++++++
+
+CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
+
+
+newformat="$CURRENT_BRANCH-%Y%m%dV1.0"
+
+varone=$(git describe --tags | cut -d '.' -f 1)
+vartwo=$(git describe --tags | cut -d '.' -f 2)
+varthree=$((vartwo + 1))
+
+echo "$varthree"
+newformat="$varone.$varthree"
+
+
+# Specify the tag format you want to use
+newformat="$CURRENT_BRANCH-%Y%m%dV1.0"
+
+# Create a tag with the specified format
+TAG_NAME=$(date +$newformat)
+git tag $TAG_NAME
+
+
+
+format="AppNameDateV1.0"
+
+# Extract the first part of the format before the first dot '.'
+var1=$(echo "$format" | cut -d '.' -f 1)
+echo "$var1"
+
+# Extract the second part of the format after the first dot '.'
+var2=$(echo "$format" | cut -d '.' -f 2)
+echo "$var2"
+
+# Increment the second part by 1 using arithmetic expansion (( ))
+var3=$((var2 + 1))
+echo "$var3"
+
+# Concatenate the first part 'var1' with a dot '.' and the incremented second part 'var3'
+newformat="$var1.$var3"
+echo "$newformat"
