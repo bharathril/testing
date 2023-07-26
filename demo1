@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash         
 
 # CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
 
