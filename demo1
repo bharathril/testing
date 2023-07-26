@@ -2,7 +2,7 @@
 #added  new
 # CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
 
-# # Specify the tag format you want to use
+# # Specsasify the tag format you want to use
 # newformat="$CURRENT_BRANCH-%Y%m%dV1.0"
 
 # # Create a tag with the specified format
