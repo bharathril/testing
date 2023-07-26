@@ -65,7 +65,8 @@ jobs:
       run: echo "::set-output name=tag::$GITHUB_REF"
 
     - name: Display New Tag
-      run: echo "New tag: ${{ steps.tag_output.outputs.tag }}"
+      run: |
+        echo "New tag: ${{ steps.tag_output.outputs.tag }}"
 
     - name: Inform User
       run: echo "Tag \"${{ steps.tag_output.outputs.tag }}\" created successfully!"
