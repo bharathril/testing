@@ -4,6 +4,8 @@
 
 # # Specify the tag format you want to use
 # newformat="$CURRENT_BRANCH-%Y%m%dV1.0"
+added thsi file
+
 
 # # Create a tag with the specified format
 # TAG_NAME=$(date +$newformat)
