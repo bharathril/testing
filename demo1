@@ -1,5 +1,5 @@
-#!/bin/bash
-
+#!/bin/bash         
+#added
 # CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
 
 # # Specify the tag format you want to use
