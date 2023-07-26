@@ -1,4 +1,4 @@
-name: Create Tag on Push
+name: name: DEV
 
 on:
   push:
