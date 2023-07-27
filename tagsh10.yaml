@@ -64,7 +64,7 @@ jobs:
 
     - name: Display New Tag
       run: |
-       echo "New tag: ${{ env.new_tag }}"
+      echo "New tag: ${{ env.new_tag }}"
 
     - name: Inform User
       run: echo "Tag \"$new_tag\" created successfully!"
