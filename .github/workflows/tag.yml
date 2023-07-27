@@ -36,16 +36,16 @@ jobs:
 
     - name: Get Latest Tag
       run: |
-        latest_tag=$(git describe --tags --abbrev=0)
+        latest_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
         echo "latest_tag=$latest_tag" >> $GITHUB_ENV
 
     - name: Extract Version Number
       run: |
         latest_tag="${{ env.latest_tag }}"
-        version_number=$(echo "$latest_tag" | awk -F'.' '{print $NF}')
-        if [ -z "$version_number" ]; then
+        if [ -z "$latest_tag" ]; then
             new_version_number=1
         else
+            version_number=$(echo "$latest_tag" | awk -F'.' '{print $NF}')
             new_version_number=$((version_number + 1))
         fi
         echo "new_version_number=$new_version_number" >> $GITHUB_ENV
@@ -63,8 +63,8 @@ jobs:
       run: git push origin "${{ env.new_tag }}"
 
     - name: Display New Tag
-      run: | 
-         echo "New tag: ${{ env.new_tag }}"
+      run: |
+       echo "New tag: ${{ env.new_tag }}"
 
     - name: Inform User
       run: echo "Tag \"$new_tag\" created successfully!"
