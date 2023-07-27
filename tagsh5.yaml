@@ -1,9 +1,9 @@
-name: DEV
+name: Create Tag on Push
 
 on:
   push:
     branches:
-      - test
+      - your-target-branch
 
 jobs:
   create_tag:
@@ -12,6 +12,7 @@ jobs:
     env:
       GITHUB_EMAIL: "${{ github.actor }}@users.noreply.github.com"
       GITHUB_NAME: "${{ github.actor }}"
+      TAG: ''
 
     steps:
     - name: Check Out Code
@@ -39,11 +40,12 @@ jobs:
     - name: Extract Version Number
       id: version_number
       run: |
-        if [[ "${{ steps.latest_tag.outputs.latest_tag }}" =~ [0-9]+$ ]]; then
-            version_number=${{BASH_REMATCH[0]}}
-            new_version_number=$((version_number + 1))
-        else
+        latest_tag="${{ steps.latest_tag.outputs.latest_tag }}"
+        version_number=$(echo "$latest_tag" | grep -oE '[0-9]+$')
+        if [ -z "$version_number" ]; then
             new_version_number=1
+        else
+            new_version_number=$((version_number + 1))
         fi
         echo "::set-output name=new_version_number::$new_version_number"
 
@@ -55,18 +57,14 @@ jobs:
         new_version_number="${{ steps.version_number.outputs.new_version_number }}"
         new_tag="$branch_name-$current_date-V1.$new_version_number"
         git tag "$new_tag"
-        echo "::set-output name=new_tag::$new_tag"
+        echo "$new_tag" >> $GITHUB_ENV
 
     - name: Push New Tag
-      run: git push origin "${{ steps.new_tag.outputs.new_tag }}"
-
-    - name: Set New Tag as Output
-      id: tag_output
-      run: echo "::set-output name=tag::$GITHUB_REF"
+      run: git push origin "$new_tag"
 
     - name: Display New Tag
       run: |
-        echo "New tag: ${{ steps.tag_output.outputs.tag }}"
+      echo "New tag: $new_tag"
 
     - name: Inform User
-      run: echo "Tag \"${{ steps.tag_output.outputs.tag }}\" created successfully!"
+      run: echo "Tag \"$new_tag\" created successfully!"

@@ -3,15 +3,11 @@ name: Create Tag on Push
 on:
   push:
     branches:
-      - test
+      - your-target-branch
 
 jobs:
   create_tag:
     runs-on: ubuntu-latest
-
-    env:
-      GITHUB_EMAIL: "${{ github.actor }}@users.noreply.github.com"
-      GITHUB_NAME: "${{ github.actor }}"
 
     steps:
     - name: Check Out Code
@@ -19,8 +15,8 @@ jobs:
 
     - name: Set up Git
       run: |
-        git config --local user.email "${GITHUB_EMAIL}"
-        git config --local user.name "${GITHUB_NAME}"
+        git config --local user.email "${{ github.actor }}@users.noreply.github.com"
+        git config --local user.name "${{ github.actor }}"
 
     - name: Get Current Date
       id: date
@@ -66,7 +62,7 @@ jobs:
 
     - name: Display New Tag
       run: |
-        echo "New tag: ${{ steps.tag_output.outputs.tag }}"
+      echo "New tag: ${{ steps.tag_output.outputs.tag }}"
 
     - name: Inform User
       run: echo "Tag \"${{ steps.tag_output.outputs.tag }}\" created successfully!"

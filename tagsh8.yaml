@@ -1,0 +1,74 @@
+name: Create Tag on Push
+
+on:
+  push:
+    branches:
+      - bharath
+
+jobs:
+  create_tag:
+    runs-on: ubuntu-latest
+
+    env:
+      GITHUB_EMAIL: "${{ github.actor }}@users.noreply.github.com"
+      GITHUB_NAME: "${{ github.actor }}"
+
+    steps:
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16.x' # Use Node.js version 16.x
+
+    - name: Check Out Code
+      uses: actions/checkout@v2
+
+    - name: Set up Git
+      run: |
+        git config --local user.email "${GITHUB_EMAIL}"
+        git config --local user.name "${GITHUB_NAME}"
+
+    - name: Get Current Date
+      id: date
+      run: echo "::set-output name=current_date::$(date +'%Y%m%d')"
+
+    - name: Get Branch Name
+      id: branch_name
+      run: echo "::set-output name=branch_name::$(echo $GITHUB_REF | awk -F'/' '{print $3}')"
+
+    - name: Get Latest Tag
+      id: latest_tag
+      run: |
+        latest_tag=$(git describe --tags --abbrev=0)
+        echo "::set-output name=latest_tag::$latest_tag"
+
+    - name: Extract Version Number
+      id: version_number
+      run: |
+        latest_tag="${{ steps.latest_tag.outputs.latest_tag }}"
+        version_number=$(echo "$latest_tag" | awk -F'.' '{print $NF}')
+        if [ -z "$version_number" ]; then
+            new_version_number=1
+        else
+            new_version_number=$((version_number + 1))
+        fi
+        echo "::set-output name=new_version_number::$new_version_number"
+
+    - name: Create New Tag
+      id: new_tag
+      run: |
+        branch_name="${{ steps.branch_name.outputs.branch_name }}"
+        current_date="${{ steps.date.outputs.current_date }}"
+        new_version_number="${{ steps.version_number.outputs.new_version_number }}"
+        new_tag="$branch_name-$current_date-V1.$new_version_number"
+        git tag -a "$new_tag" -m ""
+        echo "$new_tag" >> $GITHUB_ENV
+
+    - name: Push New Tag
+      run: git push origin "$new_tag"
+
+    - name: Display New Tag
+      run: |
+      echo "New tag: $new_tag"
+
+    - name: Inform User
+      run: echo "Tag \"$new_tag\" created successfully!"
