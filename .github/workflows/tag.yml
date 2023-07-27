@@ -1,4 +1,4 @@
-name: create a tag
+name: Create Tag on Push
 
 on:
   push:
@@ -39,11 +39,12 @@ jobs:
     - name: Extract Version Number
       id: version_number
       run: |
-        if [[ "${{ steps.latest_tag.outputs.latest_tag }}" =~ [0-9]+$ ]]; then
-            version_number=${{BASH_REMATCH[0]}}
-            new_version_number=$((version_number + 1))
-        else
+        latest_tag="${{ steps.latest_tag.outputs.latest_tag }}"
+        version_number=$(echo "$latest_tag" | grep -oE '[0-9]+$')
+        if [ -z "$version_number" ]; then
             new_version_number=1
+        else
+            new_version_number=$((version_number + 1))
         fi
         echo "::set-output name=new_version_number::$new_version_number"
 
@@ -65,8 +66,7 @@ jobs:
       run: echo "::set-output name=tag::$GITHUB_REF"
 
     - name: Display New Tag
-      run: |
-        echo "New tag: ${{ steps.tag_output.outputs.tag }}"
+      run: echo "New tag: ${{ steps.tag_output.outputs.tag }}"
 
     - name: Inform User
       run: echo "Tag \"${{ steps.tag_output.outputs.tag }}\" created successfully!"
