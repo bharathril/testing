@@ -3,7 +3,7 @@ name: Create Tag on Push
 on:
   push:
     branches:
-      - bharath
+      - your-target-branch
 
 jobs:
   create_tag:
@@ -41,7 +41,7 @@ jobs:
       id: version_number
       run: |
         latest_tag="${{ steps.latest_tag.outputs.latest_tag }}"
-        version_number=$(echo "$latest_tag" | awk -F'.' '{print $NF}')
+        version_number=$(echo "$latest_tag" | grep -oE '[0-9]+$')
         if [ -z "$version_number" ]; then
             new_version_number=1
         else
@@ -56,7 +56,7 @@ jobs:
         current_date="${{ steps.date.outputs.current_date }}"
         new_version_number="${{ steps.version_number.outputs.new_version_number }}"
         new_tag="$branch_name-$current_date-V1.$new_version_number"
-        git tag -a "$new_tag" -m ""
+        git tag "$new_tag"
         echo "$new_tag" >> $GITHUB_ENV
 
     - name: Push New Tag
@@ -64,7 +64,7 @@ jobs:
 
     - name: Display New Tag
       run: |
-       echo "New tag: $new_tag"
+      echo "New tag: $new_tag"
 
     - name: Inform User
       run: echo "Tag \"$new_tag\" created successfully!"
