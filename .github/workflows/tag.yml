@@ -3,7 +3,7 @@ name: create a tag
 on:
   push:
     branches:
-      - tag
+      - bharath
 
 jobs:
   create_tag:
