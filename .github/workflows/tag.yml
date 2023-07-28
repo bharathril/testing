@@ -23,7 +23,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Set up Git
-      run: |
+      run: |    
         git config --local user.email "${GITHUB_EMAIL}"
         git config --local user.name "${GITHUB_NAME}"
 
