@@ -13,6 +13,8 @@ jobs:
         uses: mathieudutour/github-tag-action@v6.1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          # Optionally, specify the tag prefix here (default is 'v')
+          # tag_prefix: 'v'
       - name: Create a GitHub release
         uses: ncipollo/release-action@v1
         with:
@@ -23,4 +25,3 @@ jobs:
       - name: Debug GitHub Token
         run: |
             echo "Token: ${{ secrets.GITHUB_TOKEN }}"
-          
